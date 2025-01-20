@@ -208,10 +208,6 @@ namespace BookingApp.Controllers
         [HttpPost]
         public async Task<ActionResult<Stay>> PostStay([Bind("Name,Country,Description,City,Address,IsHouse,FullPropertyAccess,NumberOfRooms,MaxPeople,PetsAllowed,StartDate,EndDate,PricePerDay,PartnerId")] StayDto stayDto)
         {
-            //_context.Stays.Add(stay);
-            //await _context.SaveChangesAsync();
-
-            //return CreatedAtAction("GetStay", new { id = stay.Id }, stay);
 
             var partner = await _context.Partners.FindAsync(stayDto.PartnerId);
 

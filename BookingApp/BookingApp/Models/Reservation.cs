@@ -1,4 +1,5 @@
-﻿using BookingApp.Models.Validation;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using BookingApp.Models.Validation;
 
 namespace BookingApp.Models
 {
@@ -26,8 +27,11 @@ namespace BookingApp.Models
         }
 
         // navigation properties
+        [ForeignKey(nameof(Stay))]
+        public int StayId { get; set; }
         public Stay Stay { get; set; }
-
+        [ForeignKey(nameof(Guest))]
+        public int GuestId { get; set; }
         public Guest Guest { get; set; }
     }
 }

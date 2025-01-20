@@ -76,12 +76,36 @@ namespace BookingApp.Controllers
         // POST: api/Reservations
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Reservation>> PostReservation(Reservation reservation)
+        public async Task<ActionResult<Reservation>> PostReservation([Bind("StartDate,EndDate,NumberOfPeople,StayId,GuestId")] ReservationDTO reservationDTO)
         {
+            //_context.Reservations.Add(reservation);
+            //await _context.SaveChangesAsync();
+
+            //return CreatedAtAction("GetReservation", new { id = reservation.Id }, reservation);
+
+            var stay = await _context.Stays.FindAsync(reservationDTO.StayId);
+
+            if (stay == null) { return NotFound("Stay not found."); }
+
+            var guest = await _context.Guests.FindAsync(reservationDTO.GuestId);
+
+            if (guest == null) { return NotFound("Guest not found."); }
+
+            var reservation = new Reservation
+            {
+                StartDate = reservationDTO.StartDate,
+                EndDate = reservationDTO.EndDate,
+                NumberOfPeople = reservationDTO.NumberOfPeople,
+                GuestId = reservationDTO.GuestId,
+                StayId = reservationDTO.StayId,
+                Stay = stay,
+                Guest = guest
+            };
+
             _context.Reservations.Add(reservation);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetReservation", new { id = reservation.Id }, reservation);
+            return CreatedAtAction(nameof(GetReservation), new { id = reservation.Id }, reservation);
         }
 
         // DELETE: api/Reservations/5
