@@ -227,7 +227,6 @@ namespace BookingApp.Controllers
                 PetsAllowed = stayDto.PetsAllowed,
                 PricePerDay = stayDto.PricePerDay,
                 PartnerId = stayDto.PartnerId,
-                Partner = partner
             };
 
             _context.Stays.Add(stay);

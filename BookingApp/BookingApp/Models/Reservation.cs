@@ -17,21 +17,12 @@ namespace BookingApp.Models
         [NoMorePeopleThanMax]
         public int NumberOfPeople { get; set; }
 
-        public int Price 
-        { 
-            get 
-            {
-                int numberOfDays = (EndDate.ToDateTime(TimeOnly.MinValue) - StartDate.ToDateTime(TimeOnly.MinValue)).Days;
-                return Stay.PricePerDay * NumberOfPeople * numberOfDays;
-            } 
-        }
+        public int Price { get; set;}
 
         // navigation properties
         [ForeignKey(nameof(Stay))]
         public int StayId { get; set; }
-        public Stay Stay { get; set; }
         [ForeignKey(nameof(Guest))]
         public int GuestId { get; set; }
-        public Guest Guest { get; set; }
     }
 }

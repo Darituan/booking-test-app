@@ -7,8 +7,10 @@ namespace BookingApp.Models.Validation
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
             var reservation = (Reservation)validationContext.ObjectInstance;
+            var context = (BookingDbContext)validationContext.GetService(typeof(BookingDbContext));
+            var stay = context.Stays.FirstOrDefault(s => s.Id == reservation.StayId);
 
-            if (reservation.NumberOfPeople > reservation.Stay.MaxPeople)
+            if (reservation.NumberOfPeople > stay.MaxPeople)
             {
                 return new ValidationResult("The number of guests cannot exceed the maximum for chosen property");
             }

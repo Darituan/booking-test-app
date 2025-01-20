@@ -11,7 +11,7 @@ namespace BookingApp.Models.Validation
             var context = (BookingDbContext)validationContext.GetService(typeof(BookingDbContext));
 
             var overlappingReservations = context.Reservations
-                .Where(r => r.Stay.Id == reservation.Stay.Id &&
+                .Where(r => r.StayId == reservation.StayId &&
                             r.Id != reservation.Id &&
                             (reservation.StartDate <= r.EndDate && reservation.EndDate >= r.StartDate))
                 .ToList();

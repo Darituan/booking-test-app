@@ -98,8 +98,7 @@ namespace BookingApp.Controllers
                 NumberOfPeople = reservationDTO.NumberOfPeople,
                 GuestId = reservationDTO.GuestId,
                 StayId = reservationDTO.StayId,
-                Stay = stay,
-                Guest = guest
+                Price = reservationDTO.NumberOfPeople * stay.PricePerDay * (reservationDTO.EndDate.ToDateTime(TimeOnly.MinValue) - reservationDTO.StartDate.ToDateTime(TimeOnly.MinValue)).Days
             };
 
             _context.Reservations.Add(reservation);
