@@ -206,12 +206,38 @@ namespace BookingApp.Controllers
         // POST: api/Stays
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Stay>> PostStay(Stay stay)
+        public async Task<ActionResult<Stay>> PostStay([Bind("Name,Country,Description,City,Address,IsHouse,FullPropertyAccess,NumberOfRooms,MaxPeople,PetsAllowed,StartDate,EndDate,PricePerDay,PartnerId")] StayDto stayDto)
         {
+            //_context.Stays.Add(stay);
+            //await _context.SaveChangesAsync();
+
+            //return CreatedAtAction("GetStay", new { id = stay.Id }, stay);
+
+            var partner = await _context.Partners.FindAsync(stayDto.PartnerId);
+
+            if (partner == null) { return NotFound("Partner not found."); }
+
+            var stay = new Stay
+            {
+                Name = stayDto.Name,
+                Country = stayDto.Country,
+                Description = stayDto.Description,
+                City = stayDto.City,
+                Address = stayDto.Address,
+                IsHouse = stayDto.IsHouse,
+                FullPropertyAccess = stayDto.FullPropertyAccess,
+                NumberOfRooms = stayDto.NumberOfRooms,
+                MaxPeople = stayDto.MaxPeople,
+                PetsAllowed = stayDto.PetsAllowed,
+                PricePerDay = stayDto.PricePerDay,
+                PartnerId = stayDto.PartnerId,
+                Partner = partner
+            };
+
             _context.Stays.Add(stay);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetStay", new { id = stay.Id }, stay);
+            return CreatedAtAction(nameof(GetStay), new { id = stay.Id }, stay);
         }
 
         // DELETE: api/Stays/5

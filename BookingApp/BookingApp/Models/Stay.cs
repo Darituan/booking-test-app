@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using BookingApp.Models.Validation;
 
@@ -42,7 +43,8 @@ namespace BookingApp.Models
 
         // navigation properties
         public ICollection<Reservation> Reservations { get; } = new List<Reservation>();
-
+        [ForeignKey(nameof(Partner))]
+        public int PartnerId { get; set; }
         public Partner Partner { get; set; }
 
     }
