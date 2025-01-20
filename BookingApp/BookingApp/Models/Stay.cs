@@ -42,6 +42,7 @@ namespace BookingApp.Models
         public int PricePerDay { get; set; }
 
         // navigation properties
+        [JsonIgnore]
         public ICollection<Reservation> Reservations { get; } = new List<Reservation>();
         [ForeignKey(nameof(Partner))]
         public int PartnerId { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace BookingApp.Models
 {
@@ -17,7 +18,7 @@ namespace BookingApp.Models
         public string? Email { get; set; }
 
         // navigation properties
-
+        [JsonIgnore]
         public ICollection<Reservation> Reservations { get; } = new List<Reservation>();
     }
 }
